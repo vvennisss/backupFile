@@ -1,0 +1,33 @@
+{
+  "name": "places-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "refine": "node refinePlacesDescription.js",
+    "refine:dryrun": "node refinePlacesDescription.js --dry-run --sample=3",
+    "refine:gemma": "node refinePlacesDescription.js --model=gemma4:31b-cloud --concurrency=3",
+    "refine:gemma:dryrun": "node refinePlacesDescription.js --model=gemma4:31b-cloud --dry-run --sample=3",
+    "refine:gemini": "node refinePlacesDescription.js --provider=gemini",
+    "translate:zh": "node translatePlacesZh.js",
+    "translate:zh:dryrun": "node translatePlacesZh.js --dry-run --limit=3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.20.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "firebase": "^12.18.0",
+    "mongodb": "^7.6.0",
+    "mongoose": "^9.9.3",
+    "node-fetch": "^2.7.0",
+    "ollama": "^0.6.3",
+    "serpapi": "^2.2.1",
+    "sharp": "^0.35.5"
+  }
+}
