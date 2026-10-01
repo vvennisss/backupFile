@@ -1,0 +1,823 @@
+{
+  "George Town": [
+    {
+      "name": "Gurney Plaza",
+      "category": "Shopping & Markets",
+      "rating": 4.4,
+      "reviews": 21362,
+      "area": "Gurney"
+    },
+    {
+      "name": "Sunway Carnival Mall",
+      "category": "Shopping & Markets",
+      "rating": 4.3,
+      "reviews": 13878,
+      "area": "George Town"
+    },
+    {
+      "name": "Georgetown UNESCO Historic Site",
+      "category": "Heritage & Culture",
+      "rating": 4.4,
+      "reviews": 13496,
+      "area": "George Town"
+    },
+    {
+      "name": "Penang Street Art",
+      "category": "Others",
+      "rating": 4.4,
+      "reviews": 12183,
+      "area": "George Town"
+    },
+    {
+      "name": "Gurney Paragon Mall",
+      "category": "Shopping & Markets",
+      "rating": 4.3,
+      "reviews": 11991,
+      "area": "Gurney"
+    },
+    {
+      "name": "Chew Jetty 姓周桥",
+      "category": "Heritage & Culture",
+      "rating": 4.1,
+      "reviews": 10579,
+      "area": "George Town"
+    },
+    {
+      "name": "Chew Jetty",
+      "category": "Heritage & Culture",
+      "rating": 4.1,
+      "reviews": 10558,
+      "area": "George Town"
+    },
+    {
+      "name": "1st Avenue Mall",
+      "category": "Shopping & Markets",
+      "rating": 4.1,
+      "reviews": 10116,
+      "area": "George Town"
+    }
+  ],
+  "Air Itam": [
+    {
+      "name": "Kek Lok Si Temple",
+      "category": "Heritage & Culture",
+      "rating": 4.4,
+      "reviews": 15142,
+      "area": "Air Itam"
+    },
+    {
+      "name": "MonkeyCup@PenangHill",
+      "category": "Cafes",
+      "rating": 4.8,
+      "reviews": 13390,
+      "area": "Air Itam"
+    },
+    {
+      "name": "Stesen Bukit Bendera Pulau Pinang",
+      "category": "Others",
+      "rating": 4.3,
+      "reviews": 10495,
+      "area": "Air Itam"
+    },
+    {
+      "name": "Starbucks - Batu Ferringhi",
+      "category": "Cafes",
+      "rating": 4.4,
+      "reviews": 4463,
+      "area": "Air Itam"
+    },
+    {
+      "name": "The Habitat Penang Hill",
+      "category": "Heritage & Culture",
+      "rating": 4.4,
+      "reviews": 4424,
+      "area": "Air Itam"
+    },
+    {
+      "name": "Penang Air Itam Laksa",
+      "category": "Food & Dining",
+      "rating": 4.1,
+      "reviews": 3495,
+      "area": "Air Itam"
+    },
+    {
+      "name": "Sunshine Hypermarket",
+      "category": "Shopping & Markets",
+      "rating": 4,
+      "reviews": 2925,
+      "area": "Air Itam"
+    },
+    {
+      "name": "Funicular Service Penang Hill",
+      "category": "Others",
+      "rating": 4.2,
+      "reviews": 2569,
+      "area": "Air Itam"
+    }
+  ],
+  "Batu Ferringhi": [
+    {
+      "name": "Shangri-La Golden Sands, Penang",
+      "category": "Others",
+      "rating": 4.2,
+      "reviews": 10755,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Entopia by Penang Butterfly Farm",
+      "category": "Nature & Parks",
+      "rating": 4.5,
+      "reviews": 10095,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Biru Biru On The Island",
+      "category": "Food & Dining",
+      "rating": 4.8,
+      "reviews": 9060,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Bayview Beach Resort",
+      "category": "Others",
+      "rating": 4.2,
+      "reviews": 8457,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "PARKROYAL Penang Resort",
+      "category": "Others",
+      "rating": 4.5,
+      "reviews": 7856,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Shangri-La Rasa Sayang, Penang",
+      "category": "Others",
+      "rating": 4.6,
+      "reviews": 7323,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "ESCAPE Penang",
+      "category": "Nature & Parks",
+      "rating": 4.6,
+      "reviews": 7237,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "DoubleTree Resort by Hilton Penang",
+      "category": "Others",
+      "rating": 4.3,
+      "reviews": 6479,
+      "area": "Batu Ferringhi"
+    }
+  ],
+  "Gurney Drive": [
+    {
+      "name": "Gurney Drive Hawker Center",
+      "category": "Food & Dining",
+      "rating": 3.8,
+      "reviews": 9679,
+      "area": "Gurney"
+    }
+  ],
+  "Tanjung Tokong": [
+    {
+      "name": "Hompton by the Beach Penang",
+      "category": "Others",
+      "rating": 4.6,
+      "reviews": 6179,
+      "area": "Tanjung Tokong"
+    },
+    {
+      "name": "Fire By Shankar",
+      "category": "Food & Dining",
+      "rating": 4.8,
+      "reviews": 5588,
+      "area": "Tanjung Tokong"
+    },
+    {
+      "name": "Flamingo Hotel By The Beach,Penang",
+      "category": "Others",
+      "rating": 3.8,
+      "reviews": 4693,
+      "area": "Tanjung Tokong"
+    },
+    {
+      "name": "Rainbow Paradise Beach Resort",
+      "category": "Others",
+      "rating": 3.7,
+      "reviews": 4201,
+      "area": "Tanjung Tokong"
+    },
+    {
+      "name": "The Palm Cafe & Bistro",
+      "category": "Food & Dining",
+      "rating": 4.8,
+      "reviews": 3946,
+      "area": "Tanjung Tokong"
+    },
+    {
+      "name": "Hotel Sentral Seaview Penang",
+      "category": "Others",
+      "rating": 3.6,
+      "reviews": 2933,
+      "area": "Tanjung Tokong"
+    },
+    {
+      "name": "Oceano Symphony",
+      "category": "Food & Dining",
+      "rating": 4.4,
+      "reviews": 2873,
+      "area": "Tanjung Tokong"
+    },
+    {
+      "name": "HAKU - Extraordinary Japanese Cuisine",
+      "category": "Food & Dining",
+      "rating": 4.9,
+      "reviews": 2726,
+      "area": "Tanjung Tokong"
+    }
+  ],
+  "Tanjung Bungah": [
+    {
+      "name": "Entopia by Penang Butterfly Farm",
+      "category": "Nature & Parks",
+      "rating": 4.5,
+      "reviews": 10095,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Biru Biru On The Island",
+      "category": "Food & Dining",
+      "rating": 4.8,
+      "reviews": 9060,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "ESCAPE Penang",
+      "category": "Nature & Parks",
+      "rating": 4.6,
+      "reviews": 7237,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Hompton by the Beach Penang",
+      "category": "Others",
+      "rating": 4.6,
+      "reviews": 6179,
+      "area": "Tanjung Tokong"
+    },
+    {
+      "name": "Flamingo Hotel By The Beach,Penang",
+      "category": "Others",
+      "rating": 3.8,
+      "reviews": 4693,
+      "area": "Tanjung Tokong"
+    },
+    {
+      "name": "Rainbow Paradise Beach Resort",
+      "category": "Others",
+      "rating": 3.7,
+      "reviews": 4201,
+      "area": "Tanjung Tokong"
+    },
+    {
+      "name": "Angsana Teluk Bahang Penang",
+      "category": "Others",
+      "rating": 4.5,
+      "reviews": 2950,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Oceano Symphony",
+      "category": "Food & Dining",
+      "rating": 4.4,
+      "reviews": 2873,
+      "area": "Tanjung Tokong"
+    }
+  ],
+  "Pulau Tikus": [
+    {
+      "name": "Gurney Plaza",
+      "category": "Shopping & Markets",
+      "rating": 4.4,
+      "reviews": 21362,
+      "area": "Gurney"
+    },
+    {
+      "name": "Gurney Drive Hawker Center",
+      "category": "Food & Dining",
+      "rating": 3.8,
+      "reviews": 9679,
+      "area": "Gurney"
+    },
+    {
+      "name": "RASA SAYANG NYONYA CUISINE",
+      "category": "Food & Dining",
+      "rating": 4.9,
+      "reviews": 3374,
+      "area": "George Town"
+    },
+    {
+      "name": "Youth Park",
+      "category": "Nature & Parks",
+      "rating": 4.5,
+      "reviews": 2184,
+      "area": "George Town"
+    },
+    {
+      "name": "Pulau Tikus Wet Market",
+      "category": "Shopping & Markets",
+      "rating": 4.1,
+      "reviews": 2135,
+      "area": "George Town"
+    },
+    {
+      "name": "Nusa Dua Massage Treatment House ( Pulau Tikus)",
+      "category": "Wellness & Spa",
+      "rating": 4.9,
+      "reviews": 2023,
+      "area": "George Town"
+    },
+    {
+      "name": "Penang Waterfall Hill Temple (தண்ணீர் மலை கோயில்)",
+      "category": "Religious Sites",
+      "rating": 4.7,
+      "reviews": 1483,
+      "area": "George Town"
+    },
+    {
+      "name": "Wat Buppharam Buddhist Temple Penang",
+      "category": "Religious Sites",
+      "rating": 4.6,
+      "reviews": 1342,
+      "area": "George Town"
+    }
+  ],
+  "Teluk Bahang": [
+    {
+      "name": "Entopia by Penang Butterfly Farm",
+      "category": "Nature & Parks",
+      "rating": 4.5,
+      "reviews": 10095,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "ESCAPE Penang",
+      "category": "Nature & Parks",
+      "rating": 4.6,
+      "reviews": 7237,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Angsana Teluk Bahang Penang",
+      "category": "Others",
+      "rating": 4.5,
+      "reviews": 2950,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Penang Tropical Fruit Farm",
+      "category": "Heritage & Culture",
+      "rating": 4.1,
+      "reviews": 2944,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Monkey Beach",
+      "category": "Nature & Parks",
+      "rating": 3.9,
+      "reviews": 2132,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Tropical Spice Garden | Events Venue | Cooking Classes | Spice Store",
+      "category": "Heritage & Culture",
+      "rating": 4.6,
+      "reviews": 2044,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "2 Acres Cafe",
+      "category": "Cafes",
+      "rating": 4.3,
+      "reviews": 774,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Teluk Bahang Beach",
+      "category": "Nature & Parks",
+      "rating": 4.3,
+      "reviews": 716,
+      "area": "Batu Ferringhi"
+    }
+  ],
+  "Balik Pulau": [
+    {
+      "name": "Kek Lok Si Temple",
+      "category": "Heritage & Culture",
+      "rating": 4.4,
+      "reviews": 15142,
+      "area": "Air Itam"
+    },
+    {
+      "name": "Audi Dream Farm",
+      "category": "Heritage & Culture",
+      "rating": 3.6,
+      "reviews": 1592,
+      "area": "Balik Pulau"
+    },
+    {
+      "name": "Balik Pulau",
+      "category": "Heritage & Culture",
+      "rating": 4.7,
+      "reviews": 1508,
+      "area": "Balik Pulau"
+    },
+    {
+      "name": "Countryside Stables Penang",
+      "category": "Others",
+      "rating": 4.5,
+      "reviews": 1196,
+      "area": "Balik Pulau"
+    },
+    {
+      "name": "Air Itam Dam",
+      "category": "Nature & Parks",
+      "rating": 4.6,
+      "reviews": 1194,
+      "area": "Air Itam"
+    },
+    {
+      "name": "Kim Laksa Balik Pulau",
+      "category": "Food & Dining",
+      "rating": 4,
+      "reviews": 1187,
+      "area": "Balik Pulau"
+    },
+    {
+      "name": "TF Value-Mart Balik Pulau",
+      "category": "Shopping & Markets",
+      "rating": 4.2,
+      "reviews": 1097,
+      "area": "Balik Pulau"
+    },
+    {
+      "name": "义合豆蔻场 Kilang Buah Pala Ghee Hup",
+      "category": "Heritage & Culture",
+      "rating": 4,
+      "reviews": 912,
+      "area": "Tanjung Tokong"
+    }
+  ],
+  "Bayan Lepas": [
+    {
+      "name": "Queensbay Mall",
+      "category": "Shopping & Markets",
+      "rating": 4.4,
+      "reviews": 26273,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "Design Village Outlet Mall",
+      "category": "Shopping & Markets",
+      "rating": 4.2,
+      "reviews": 13583,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "IKEA Batu Kawan",
+      "category": "Shopping & Markets",
+      "rating": 4.5,
+      "reviews": 10876,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "Lexis Suites Penang",
+      "category": "Others",
+      "rating": 4.4,
+      "reviews": 9507,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "AEON",
+      "category": "Shopping & Markets",
+      "rating": 4.3,
+      "reviews": 5698,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "Empat Sekawan - Bayan Lepas",
+      "category": "Food & Dining",
+      "rating": 4.7,
+      "reviews": 5407,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "SBK Coffee 新文记咖啡体验馆 - Golden Triangle 2 Outlet *HALAL CERTIFIED*",
+      "category": "Food & Dining",
+      "rating": 4.8,
+      "reviews": 5385,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "Sunshine Square",
+      "category": "Shopping & Markets",
+      "rating": 4.1,
+      "reviews": 5176,
+      "area": "Bayan Lepas"
+    }
+  ],
+  "Bayan Baru": [
+    {
+      "name": "Sunshine Square",
+      "category": "Shopping & Markets",
+      "rating": 4.1,
+      "reviews": 5176,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "Aunty Q Recipes Kitchens (Arena Curve)",
+      "category": "Food & Dining",
+      "rating": 4.8,
+      "reviews": 5156,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "Setia SPICE Canopy",
+      "category": "Shopping & Markets",
+      "rating": 4.4,
+      "reviews": 4362,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "Daily Coffee Bayan Baru",
+      "category": "Cafes",
+      "rating": 4.6,
+      "reviews": 3214,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "Bayan Baru Market",
+      "category": "Food & Dining",
+      "rating": 4,
+      "reviews": 3123,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "Hotel Seri Malaysia Pulau Pinang",
+      "category": "Others",
+      "rating": 3.6,
+      "reviews": 2004,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "Penang Snake Temple",
+      "category": "Religious Sites",
+      "rating": 3.9,
+      "reviews": 1843,
+      "area": "Bayan Lepas"
+    },
+    {
+      "name": "Bayan Baru Market Food Court",
+      "category": "Food & Dining",
+      "rating": 4,
+      "reviews": 1811,
+      "area": "Bayan Lepas"
+    }
+  ],
+  "Jelutong": [
+    {
+      "name": "Gurney Drive Hawker Center",
+      "category": "Food & Dining",
+      "rating": 3.8,
+      "reviews": 9679,
+      "area": "Gurney"
+    },
+    {
+      "name": "Astaka Sungai Pinang",
+      "category": "Food & Dining",
+      "rating": 3.9,
+      "reviews": 4797,
+      "area": "George Town"
+    },
+    {
+      "name": "Pasar Awam & Balai Rakyat Batu Lanchang",
+      "category": "Shopping & Markets",
+      "rating": 4.1,
+      "reviews": 4277,
+      "area": "George Town"
+    },
+    {
+      "name": "Project CAN @ Lebuh Glugor",
+      "category": "Cafes",
+      "rating": 4.6,
+      "reviews": 2748,
+      "area": "George Town"
+    },
+    {
+      "name": "JELUTONG STREET MARKET",
+      "category": "Shopping & Markets",
+      "rating": 4.1,
+      "reviews": 2204,
+      "area": "George Town"
+    },
+    {
+      "name": "Bukit Dumbar Park",
+      "category": "Nature & Parks",
+      "rating": 4.4,
+      "reviews": 873,
+      "area": "George Town"
+    },
+    {
+      "name": "Bukit Hijau, Cangkat Tembaga Hiking Trail",
+      "category": "Nature & Parks",
+      "rating": 4.4,
+      "reviews": 334,
+      "area": "George Town"
+    },
+    {
+      "name": "Tabernacle of Praise Penang",
+      "category": "Religious Sites",
+      "rating": 4.6,
+      "reviews": 188,
+      "area": "George Town"
+    }
+  ],
+  "Gelugor": [
+    {
+      "name": "U Hotel Penang",
+      "category": "Others",
+      "rating": 4,
+      "reviews": 1468,
+      "area": "George Town"
+    },
+    {
+      "name": "Century Bay Private Residence",
+      "category": "Others",
+      "rating": 4,
+      "reviews": 1066,
+      "area": "George Town"
+    },
+    {
+      "name": "Terminal Bas Sungai Nibong",
+      "category": "Others",
+      "rating": 2.3,
+      "reviews": 460,
+      "area": "Batu Ferringhi"
+    },
+    {
+      "name": "Pasar Malam Taman Tun Sardon",
+      "category": "Shopping & Markets",
+      "rating": 4.1,
+      "reviews": 409,
+      "area": "George Town"
+    },
+    {
+      "name": "Sungai Dua Night Market",
+      "category": "Shopping & Markets",
+      "rating": 4,
+      "reviews": 298,
+      "area": "George Town"
+    },
+    {
+      "name": "Jaya Restaurant (Gelugor)",
+      "category": "Food & Dining",
+      "rating": 4.6,
+      "reviews": 251,
+      "area": "George Town"
+    },
+    {
+      "name": "Muzium & Galeri Tuanku Fauziah",
+      "category": "Heritage & Culture",
+      "rating": 4.5,
+      "reviews": 215,
+      "area": "George Town"
+    },
+    {
+      "name": "Hare Krsna Gelugor ISKCON",
+      "category": "Religious Sites",
+      "rating": 4.8,
+      "reviews": 196,
+      "area": "George Town"
+    }
+  ],
+  "Butterworth": [
+    {
+      "name": "Penang Sentral",
+      "category": "Others",
+      "rating": 4.3,
+      "reviews": 8367,
+      "area": "Butterworth"
+    },
+    {
+      "name": "Khunthai Restaurant @ Butterworth",
+      "category": "Food & Dining",
+      "rating": 4.1,
+      "reviews": 3199,
+      "area": "Butterworth"
+    },
+    {
+      "name": "KTMB Butterworth Station",
+      "category": "Others",
+      "rating": 4,
+      "reviews": 2800,
+      "area": "Butterworth"
+    },
+    {
+      "name": "Pantai Bersih",
+      "category": "Nature & Parks",
+      "rating": 4.1,
+      "reviews": 2514,
+      "area": "Butterworth"
+    },
+    {
+      "name": "Tow Boo Kong Temple (北海斗母宫)",
+      "category": "Religious Sites",
+      "rating": 4.6,
+      "reviews": 1780,
+      "area": "Butterworth"
+    },
+    {
+      "name": "Pasar Awam Apollo • Jalan Bunga Raya",
+      "category": "Shopping & Markets",
+      "rating": 4,
+      "reviews": 1649,
+      "area": "Butterworth"
+    },
+    {
+      "name": "The Beer Factory",
+      "category": "Food & Dining",
+      "rating": 4.5,
+      "reviews": 1532,
+      "area": "Butterworth"
+    },
+    {
+      "name": "Pantai Robina",
+      "category": "Nature & Parks",
+      "rating": 4.4,
+      "reviews": 1462,
+      "area": "Batu Ferringhi"
+    }
+  ],
+  "Seberang Perai": [
+    {
+      "name": "AEON MALL Bukit Mertajam",
+      "category": "Shopping & Markets",
+      "rating": 4.2,
+      "reviews": 12081,
+      "area": "Seberang Perai"
+    },
+    {
+      "name": "Mydin Bukit Mertajam",
+      "category": "Shopping & Markets",
+      "rating": 4.2,
+      "reviews": 7586,
+      "area": "Seberang Perai"
+    },
+    {
+      "name": "Lotus's Bukit Mertajam",
+      "category": "Shopping & Markets",
+      "rating": 4,
+      "reviews": 4608,
+      "area": "Seberang Perai"
+    },
+    {
+      "name": "Iconic Hotel Penang",
+      "category": "Others",
+      "rating": 4.2,
+      "reviews": 3114,
+      "area": "Seberang Perai"
+    },
+    {
+      "name": "Empat Sekawan (Sentral Jaya Halal Certified)",
+      "category": "Cafes",
+      "rating": 4.8,
+      "reviews": 2945,
+      "area": "Seberang Perai"
+    },
+    {
+      "name": "Fresh Food Court",
+      "category": "Food & Dining",
+      "rating": 3.8,
+      "reviews": 2897,
+      "area": "Seberang Perai"
+    },
+    {
+      "name": "Billion Shopping Centre (Kota Permai)",
+      "category": "Shopping & Markets",
+      "rating": 4,
+      "reviews": 2498,
+      "area": "Seberang Perai"
+    },
+    {
+      "name": "Minor Basilica of St. Anne, Bukit Mertajam",
+      "category": "Religious Sites",
+      "rating": 4.7,
+      "reviews": 2416,
+      "area": "Seberang Perai"
+    }
+  ]
+}
