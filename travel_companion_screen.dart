@@ -1336,9 +1336,11 @@ class _TravelCompanionScreenState extends State<TravelCompanionScreen> {
     // The option buttons are disabled (grey color) if user made choice OR if there is new input
     final bool isDisabled = hasMadeChoice || !isLatestMessageInChat;
 
-    const unselectedOptionBg = Color(0xFFEDF2FF);
+    const unselectedOptionBg = Color(0xFFE0F2FE); // Light blue matching shortcut key blue background
+    const unselectedOptionBorder = BorderSide(color: Color(0xFFBAE6FD), width: 1.2);
     const selectedActiveBg = Color(0xFF2B52FF);
     const unselectedBothBg = Color(0xFFFFDA0A);
+    const unselectedBothBorder = BorderSide(color: Color(0xFFFDE047), width: 1.2);
 
     const disabledBg = Color(0xFFE2E8F0); // Subtle slate grey background
     const disabledFg = Color(0xFF94A3B8); // Muted slate text/icon color
@@ -1360,7 +1362,10 @@ class _TravelCompanionScreenState extends State<TravelCompanionScreen> {
         : (isDisabled ? disabledBg : unselectedOptionBg);
     final Color fgA = isASelected
         ? Colors.white
-        : (isDisabled ? disabledFg : Colors.black);
+        : (isDisabled ? disabledFg : const Color(0xFF0369A1));
+    final BorderSide borderA = isASelected
+        ? BorderSide.none
+        : (isDisabled ? disabledBorder : unselectedOptionBorder);
 
     // Dynamic styling for Option B
     final Color bgB = isBSelected
@@ -1368,7 +1373,10 @@ class _TravelCompanionScreenState extends State<TravelCompanionScreen> {
         : (isDisabled ? disabledBg : unselectedOptionBg);
     final Color fgB = isBSelected
         ? Colors.white
-        : (isDisabled ? disabledFg : Colors.black);
+        : (isDisabled ? disabledFg : const Color(0xFF0369A1));
+    final BorderSide borderB = isBSelected
+        ? BorderSide.none
+        : (isDisabled ? disabledBorder : unselectedOptionBorder);
 
     // Dynamic styling for Add Both Suggestions button
     final Color bgBoth = isBothSelected
@@ -1376,7 +1384,10 @@ class _TravelCompanionScreenState extends State<TravelCompanionScreen> {
         : (isDisabled ? disabledBg : unselectedBothBg);
     final Color fgBoth = isBothSelected
         ? Colors.white
-        : (isDisabled ? disabledFg : Colors.black);
+        : (isDisabled ? disabledFg : const Color(0xFF713F12));
+    final BorderSide borderBoth = isBothSelected
+        ? BorderSide.none
+        : (isDisabled ? disabledBorder : unselectedBothBorder);
 
     return Padding(
       padding: const EdgeInsets.only(top: 2),
@@ -1396,7 +1407,7 @@ class _TravelCompanionScreenState extends State<TravelCompanionScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
-                        side: (isDisabled && !isASelected) ? disabledBorder : BorderSide.none,
+                        side: borderA,
                       ),
                     ),
                     onPressed: isDisabled
@@ -1436,7 +1447,7 @@ class _TravelCompanionScreenState extends State<TravelCompanionScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
-                        side: (isDisabled && !isBSelected) ? disabledBorder : BorderSide.none,
+                        side: borderB,
                       ),
                     ),
                     onPressed: isDisabled
@@ -1479,7 +1490,7 @@ class _TravelCompanionScreenState extends State<TravelCompanionScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
-                    side: (isDisabled && !isASelected) ? disabledBorder : BorderSide.none,
+                    side: borderA,
                   ),
                 ),
                 onPressed: isDisabled
@@ -1518,7 +1529,7 @@ class _TravelCompanionScreenState extends State<TravelCompanionScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14),
-                  side: (isDisabled && !isBothSelected) ? disabledBorder : BorderSide.none,
+                  side: borderBoth,
                 ),
               ),
               icon: Icon(
