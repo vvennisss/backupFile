@@ -2532,13 +2532,39 @@ class TripController extends ChangeNotifier {
       }
     }
 
-    // Remove by sequence number (e.g. "remove spot 2", "delete #1", "remove 3")
-    final seqMatch = RegExp(r'(?:remove|delete|drop)\s+(?:spot\s+|#)?(\d+)').firstMatch(lower);
+    // Check if the previous AI message asked which spot to remove
+    final lastAiMsg = _chatMessages.reversed.firstWhere(
+      (m) => m.sender == MessageSender.ai,
+      orElse: () => ChatMessage(id: '', sender: MessageSender.ai, text: '', timestamp: DateTime.now()),
+    );
+    final lastAiLower = lastAiMsg.text.toLowerCase();
+    final isPendingRemovePrompt = lastAiLower.contains('which one should i remove') ||
+        lastAiLower.contains('which stop') ||
+        lastAiLower.contains('which spot') ||
+        (lastAiLower.contains('remove') && (lastAiLower.contains('draft itinerary') || lastAiLower.contains('stops currently')));
+
+    // Remove by sequence number (e.g. "remove spot 2", "delete #1", "remove 3", or "4" when prompted)
+    final seqMatch = RegExp(r'^(?:(?:remove|delete|drop)\s+(?:spot\s+|stop\s+|#)?(\d+)|(?:spot\s+|stop\s+|#)?(\d+))$', caseSensitive: false).firstMatch(lower);
     if (seqMatch != null) {
-      final seqNum = int.tryParse(seqMatch.group(1) ?? '');
-      if (seqNum != null && seqNum >= 1 && seqNum <= _draftItinerary.length) {
-        removePlaceFromDraft(seqNum - 1, notifyChat: true);
-        return;
+      final rawNum = seqMatch.group(1) ?? (isPendingRemovePrompt ? seqMatch.group(2) : null);
+      if (rawNum != null) {
+        final seqNum = int.tryParse(rawNum);
+        if (seqNum != null && seqNum >= 1 && seqNum <= _draftItinerary.length) {
+          final targetPlace = _draftItinerary[seqNum - 1];
+          removePlaceFromDraft(seqNum - 1, notifyChat: false);
+          _chatMessages.add(
+            ChatMessage(
+              id: DateTime.now().millisecondsSinceEpoch.toString(),
+              sender: MessageSender.ai,
+              text: "Got it! I've removed Stop $seqNum (${targetPlace.name}) from your list. Your plan is now leaner and meaner! 🦜",
+              timestamp: DateTime.now(),
+              showActionChips: _draftItinerary.isNotEmpty,
+            ),
+          );
+          setMascotState(MascotState.happy);
+          notifyListeners();
+          return;
+        }
       }
     }
 
@@ -3129,10 +3155,23 @@ class TripController extends ChangeNotifier {
         lower.contains('mural') ||
         lower.contains('where to go') ||
         lower.contains('what to see') ||
-        lower.contains('what can i visit');
+        lower.contains('what can i visit') ||
+        lower.contains('what else') ||
+        lower.contains('anything else') ||
+        lower.contains('something else') ||
+        lower.contains('other place') ||
+        lower.contains('other option') ||
+        lower.contains('another') ||
+        lower.contains('还有什么') ||
+        lower.contains('还有别的') ||
+        lower.contains('其他推荐') ||
+        lower.contains('别的');
 
     final isClassicHeritage = lower.contains('classic heritage') || lower.contains('1-day classic heritage');
-    final isIndoorDiscovery = lower.contains('indoor');
+    final wasLastIndoor = _chatMessages.isNotEmpty &&
+        _chatMessages.reversed.take(3).any((m) => m.text.toLowerCase().contains('indoor discovery'));
+    final isIndoorDiscovery = lower.contains('indoor') ||
+        (wasLastIndoor && (lower.contains('what else') || lower.contains('anything else') || lower.contains('other') || lower.contains('another') || lower.contains('还有')));
     final isStampHunt = lower.contains('stamp') || lower.contains('digital stamp');
 
     // 1. EXTRACT POSTCODE (e.g. 10200, 11050, 11100, 11900, etc.)
@@ -3280,6 +3319,22 @@ class TripController extends ChangeNotifier {
 
     if (matchedTour == null) return false;
 
+    // GATE: Prompt MUST be a genuine tour, recommendation, area mention, or shortcut intent!
+    // For pure conversational feedback (e.g. "Wow interesting", "Okay cool", "Nice", "Thanks"),
+    // return false so the model persona responds naturally through the LLM pipeline.
+    final bool hasRecommendationOrTourIntent = isExplicitQuickPlan ||
+        isTourRequest ||
+        isRecommendationRequest ||
+        isClassicHeritage ||
+        isIndoorDiscovery ||
+        isStampHunt ||
+        isExplicitAreaMention;
+
+    if (!hasRecommendationOrTourIntent) {
+      debugPrint('ℹ️ [INTENT BYPASS] Prompt has no recommendation/tour intent. Forwarding to LLM Companion...');
+      return false;
+    }
+
     // 3. USER PREFERENCES PRESET: Cultural & Heritage, Food & Dining
     const defaultUserPreferences = ['Cultural & Heritage', 'Food & Dining'];
     final defaultPreferenceTokens = ['heritage', 'culture', 'museum', 'history', 'food', 'dining', 'cafe', 'restaurant'];
@@ -3302,6 +3357,14 @@ class TripController extends ChangeNotifier {
     final excludedNames = <String>{};
     for (final p in _draftItinerary) {
       excludedNames.add(p.name.toLowerCase().trim());
+    }
+    // Also exclude places previously suggested in chat so alternative recommendations (e.g. "what else") offer fresh spots!
+    for (final msg in _chatMessages) {
+      if (msg.suggestedPlaces != null) {
+        for (final sp in msg.suggestedPlaces!) {
+          excludedNames.add(sp.name.toLowerCase().trim());
+        }
+      }
     }
 
     // ONLY auto-add to draft itinerary if user explicitly tapped/requested Quick Plan!
@@ -3376,10 +3439,11 @@ class TripController extends ChangeNotifier {
       }
     } else {
       try {
+        // Construct search query
+        // For indoor discovery: search targetArea and postcode, filtering by has_aircon=true via parameter
+        // DO NOT add the literal word "indoor" into the query string, because places don't have "indoor" in their names/addresses.
         final queryComponents = <String>[targetArea];
-        if (isIndoorDiscovery) {
-          queryComponents.add('indoor');
-        } else if (extractedKeywords.isNotEmpty) {
+        if (!isIndoorDiscovery && extractedKeywords.isNotEmpty) {
           queryComponents.add(extractedKeywords.first);
         }
         if (postcode != null) {
@@ -3391,6 +3455,7 @@ class TripController extends ChangeNotifier {
           debugPrint('❄️ [INDOOR DISCOVERY RAG FILTER]');
           debugPrint('   • Filter applied  : {"features.has_aircon": true}');
           debugPrint('   • Area Scoped     : $targetArea (Postcode: $postcode)');
+          debugPrint('   • Query String    : "$searchQuery"');
           debugPrint('   • Preset Themes   : ${defaultUserPreferences.join(" & ")}');
         }
 
@@ -3406,7 +3471,13 @@ class TripController extends ChangeNotifier {
           final cat = (item['category'] ?? item['primary_category'] ?? '').toLowerCase();
           final title = (item['title'] ?? item['name'] ?? '').toLowerCase();
           final summary = (item['summary'] ?? item['description'] ?? '').toLowerCase();
+          final itemArea = (item['area'] ?? '').toLowerCase();
           final combined = '$cat $title $summary';
+
+          // Heavily reward matching the targetArea
+          if (itemArea == targetArea.toLowerCase()) {
+            prefScore += 100;
+          }
 
           if (combined.contains('heritage') || combined.contains('culture') || combined.contains('museum')) {
             prefScore += 50;
@@ -3491,7 +3562,7 @@ class TripController extends ChangeNotifier {
       }
     }
 
-    // Fallback: If returned fewer than 2 non-colliding options, fill from predefined places
+    // Fallback: If returned fewer than 2 non-colliding options, fill STRICTLY from places in the same targetArea!
     if (candidateOptions.length < 2) {
       if (isStampHunt) {
         // Fallback to top known authentic Firebase stamp places
@@ -3526,10 +3597,9 @@ class TripController extends ChangeNotifier {
           }
         }
       } else {
-        final pool = isExplicitQuickPlan
-            ? kPenangPredefinedPlaces
-            : [...matchedTour.places, ...kPenangPredefinedPlaces];
-        for (final pre in pool) {
+        // First try to pick places belonging strictly to the SAME target area from matchedTour!
+        final sameAreaPool = matchedTour.places.where((p) => p.area.toLowerCase() == targetArea.toLowerCase()).toList();
+        for (final pre in sameAreaPool) {
           final preLower = pre.name.toLowerCase().trim();
           bool isExcluded = false;
           for (final ex in excludedNames) {
@@ -3542,6 +3612,45 @@ class TripController extends ChangeNotifier {
           if (!candidateOptions.any((p) => p.name.toLowerCase() == preLower)) {
             candidateOptions.add(pre);
             if (candidateOptions.length >= 2) break;
+          }
+        }
+
+        // If still need places, check predefined places in the SAME target area
+        if (candidateOptions.length < 2) {
+          final sameAreaPredefined = kPenangPredefinedPlaces.where((p) => p.area.toLowerCase() == targetArea.toLowerCase()).toList();
+          for (final pre in sameAreaPredefined) {
+            final preLower = pre.name.toLowerCase().trim();
+            bool isExcluded = false;
+            for (final ex in excludedNames) {
+              if (preLower == ex || preLower.contains(ex) || ex.contains(preLower)) {
+                isExcluded = true;
+                break;
+              }
+            }
+            if (isExcluded) continue;
+            if (!candidateOptions.any((p) => p.name.toLowerCase() == preLower)) {
+              candidateOptions.add(pre);
+              if (candidateOptions.length >= 2) break;
+            }
+          }
+        }
+
+        // Only as a final resort if the targetArea has literally no places in catalog, pick from predefined
+        if (candidateOptions.length < 2) {
+          for (final pre in kPenangPredefinedPlaces) {
+            final preLower = pre.name.toLowerCase().trim();
+            bool isExcluded = false;
+            for (final ex in excludedNames) {
+              if (preLower == ex || preLower.contains(ex) || ex.contains(preLower)) {
+                isExcluded = true;
+                break;
+              }
+            }
+            if (isExcluded) continue;
+            if (!candidateOptions.any((p) => p.name.toLowerCase() == preLower)) {
+              candidateOptions.add(pre);
+              if (candidateOptions.length >= 2) break;
+            }
           }
         }
       }
@@ -3715,7 +3824,20 @@ class TripController extends ChangeNotifier {
         : <Map<String, dynamic>>[];
 
     // 3. Construct Context Payload
+    final resolvedLoc = await _resolveUserLocationArea();
+    final effectiveArea = _userSpecifiedArea ?? resolvedLoc.area;
+    final effectivePostcode = _userSpecifiedPostcode ?? resolvedLoc.postcode;
+
     final contextPayload = <String, dynamic>{
+      'targetArea': effectiveArea,
+      'targetPostcode': effectivePostcode,
+      'userLocation': {
+        'area': resolvedLoc.area,
+        'postcode': resolvedLoc.postcode,
+        'lat': resolvedLoc.lat,
+        'lng': resolvedLoc.lng,
+        'isRealGps': resolvedLoc.isRealGps,
+      },
       'draftSpotCount': _draftItinerary.length,
       'existingTripDates': _travelDates != null ? [
         {
@@ -4146,15 +4268,57 @@ class TripController extends ChangeNotifier {
                 !_draftItinerary.any((p) => p.name.toLowerCase() == targetPlace!.name.toLowerCase())) {
               _draftItinerary.add(targetPlace);
             }
-          } else if (action == 'remove_spots' && data['payload'] != null && data['payload']['targetSequences'] is List) {
-            final targetSeqs = (data['payload']['targetSequences'] as List).map((e) => int.tryParse(e.toString())).whereType<int>().toList();
-            // Sort descending to remove safely by index
-            targetSeqs.sort((a, b) => b.compareTo(a));
-            for (final seq in targetSeqs) {
-              final idx = seq - 1;
-              if (idx >= 0 && idx < _draftItinerary.length) {
-                _draftItinerary.removeAt(idx);
+          } else {
+            bool didRemove = false;
+            if ((action == 'remove_spots' || action == 'remove_spot') &&
+                data['payload'] != null &&
+                data['payload']['targetSequences'] is List) {
+              final targetSeqs = (data['payload']['targetSequences'] as List)
+                  .map((e) => int.tryParse(e.toString()))
+                  .whereType<int>()
+                  .toList();
+              // Sort descending to remove safely by index
+              targetSeqs.sort((a, b) => b.compareTo(a));
+              for (final seq in targetSeqs) {
+                final idx = seq - 1;
+                if (idx >= 0 && idx < _draftItinerary.length) {
+                  _draftItinerary.removeAt(idx);
+                  didRemove = true;
+                }
               }
+            }
+
+            // Fallback 1: Extract sequence number directly from reply text (e.g. "removed Stop 4", "removed Spot 4", "removed #4")
+            if (!didRemove && reply.isNotEmpty) {
+              final removeRegex = RegExp(r'removed\s+(?:stop\s+|spot\s+|#)?(\d+)', caseSensitive: false);
+              final match = removeRegex.firstMatch(reply);
+              if (match != null) {
+                final seq = int.tryParse(match.group(1) ?? '');
+                if (seq != null && seq >= 1 && seq <= _draftItinerary.length) {
+                  _draftItinerary.removeAt(seq - 1);
+                  didRemove = true;
+                }
+              }
+            }
+
+            // Fallback 2: Match by place name in parentheses e.g. "removed Stop 4 (Balik Pulau International Art Village ARTOPIA)"
+            if (!didRemove && reply.isNotEmpty) {
+              final parenMatch = RegExp(r'removed\s+[^(]*\(([^)]+)\)', caseSensitive: false).firstMatch(reply);
+              if (parenMatch != null) {
+                final nameInParen = parenMatch.group(1)?.trim().toLowerCase() ?? '';
+                final foundIdx = _draftItinerary.indexWhere(
+                  (p) => p.name.toLowerCase().contains(nameInParen) || nameInParen.contains(p.name.toLowerCase()),
+                );
+                if (foundIdx != -1) {
+                  _draftItinerary.removeAt(foundIdx);
+                  didRemove = true;
+                }
+              }
+            }
+
+            if (didRemove && _timeline.isNotEmpty) {
+              _recalculateReviewTimeline();
+              _triggerAiReplanForModification();
             }
           }
 
