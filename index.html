@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Kia Kia Penang - Travel Companion Web App</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;700&family=SF+Pro+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Favicon & PWA -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#304FFE" />
+
+  <!-- Mapbox GL CSS (Same Map provider and style as Kia Kia Penang App) -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+          console.log('ServiceWorker registered:', reg.scope);
+        }).catch((err) => {
+          console.log('ServiceWorker registration skipped:', err);
+        });
+      });
+    }
+  </script>
+</head>
+<body>
+  <div id="app-container">
+    
+    <!-- Toast / Notification banner -->
+    <div id="toast-banner" class="toast-banner hidden">
+      <i class="fa-solid fa-bell toast-icon"></i>
+      <span id="toast-message">Broadcast alert received</span>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- 1. JOIN SCREEN -->
+    <!-- ============================================== -->
+    <section id="screen-join" class="screen active">
+      <div class="join-card">
+        <div class="brand-header">
+          <div class="brand-badge">
+            <i class="fa-solid fa-compass brand-icon"></i>
+          </div>
+          <h1 class="brand-title">Kia Kia Penang</h1>
+          <p class="brand-subtitle">Travel Companion Web Portal</p>
+          <div class="brand-pill">Instant Access • No App Install Needed</div>
+        </div>
+
+        <form id="join-form" onsubmit="event.preventDefault(); joinTrip();">
+          <div class="form-group">
+            <label class="input-label" for="digit-code-inputs">
+              <i class="fa-solid fa-key"></i> 6-Digit Trip Access Code
+            </label>
+            <div class="code-inputs" id="digit-code-inputs">
+              <input type="text" maxlength="1" pattern="[0-9]*" inputmode="numeric" class="code-box" id="code-0" autofocus />
+              <input type="text" maxlength="1" pattern="[0-9]*" inputmode="numeric" class="code-box" id="code-1" />
+              <input type="text" maxlength="1" pattern="[0-9]*" inputmode="numeric" class="code-box" id="code-2" />
+              <input type="text" maxlength="1" pattern="[0-9]*" inputmode="numeric" class="code-box" id="code-3" />
+              <input type="text" maxlength="1" pattern="[0-9]*" inputmode="numeric" class="code-box" id="code-4" />
+              <input type="text" maxlength="1" pattern="[0-9]*" inputmode="numeric" class="code-box" id="code-5" />
+            </div>
+            <div class="demo-code-hint">
+              <span>Demo Valid Codes: <strong>888888</strong> (Heritage Walk) or <strong>666666</strong> (Foodie Trail)</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label" for="companion-nickname">
+              <i class="fa-solid fa-user-tag"></i> Companion Nickname
+            </label>
+            <input 
+              type="text" 
+              id="companion-nickname" 
+              class="text-input" 
+              placeholder="e.g. Alex, Sam, Grandma" 
+              maxlength="20"
+              required 
+            />
+            <span class="field-hint">Your nickname will appear on the live radar map for the team.</span>
+          </div>
+
+          <!-- Error Message Banner -->
+          <div id="join-error" class="error-box hidden">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span id="join-error-text">Invalid or expired trip code. Please check with your group leader.</span>
+          </div>
+
+          <!-- Enter Trip Button -->
+          <button type="submit" id="btn-enter-trip" class="app-btn btn-indigo">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Join Trip
+          </button>
+        </form>
+
+        <div class="join-footer">
+          <div class="join-info-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Encrypted ephemeral connection</span>
+          </div>
+          <div class="join-info-item">
+            <i class="fa-solid fa-wifi"></i>
+            <span>Offline caching enabled automatically</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 2. MAIN APP SHELL (Dashboard / Action / Settings) -->
+    <!-- ============================================== -->
+    <div id="app-shell" class="hidden">
+      
+      <!-- Top Persistent Status Bar -->
+      <header class="top-status-bar">
+        <div class="status-left">
+          <div class="group-title-wrap">
+            <span class="trip-tag" id="header-trip-code">TRIP #888888</span>
+            <h2 class="trip-heading" id="header-trip-name">Penang Heritage Explorer</h2>
+          </div>
+        </div>
+        <div class="status-right">
+          <!-- Next stop countdown pill -->
+          <div class="countdown-pill" id="next-stop-pill" title="Countdown to next stop departure">
+            <i class="fa-regular fa-clock"></i>
+            <div class="countdown-texts">
+              <span class="countdown-sub">Next Stop</span>
+              <span class="countdown-time" id="countdown-timer">24 min</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- SCREEN 2: Dashboard / Map Screen -->
+      <main id="screen-dashboard" class="content-screen active">
+        
+        <!-- Interactive Leaflet Map Container -->
+        <div id="map-view" class="map-container"></div>
+
+        <!-- Map Floating Controls -->
+        <div class="map-controls">
+          <button class="map-control-btn" id="btn-recenter" onclick="centerMapOnMe()" title="Center on My Location">
+            <i class="fa-solid fa-crosshairs"></i>
+          </button>
+          <button class="map-control-btn" id="btn-fit-route" onclick="fitMapToRoute()" title="Show Entire Route">
+            <i class="fa-solid fa-route"></i>
+          </button>
+          <button class="map-control-btn" id="btn-map-style" onclick="toggleMapStyle()" title="Toggle Outdoors / Streets">
+            <i class="fa-solid fa-layer-group"></i>
+          </button>
+        </div>
+
+        <!-- Next Stop Quick Banner -->
+        <div class="next-stop-floating-card" id="quick-stop-card">
+          <div class="quick-stop-badge"><i class="fa-solid fa-location-dot"></i> Next Destination</div>
+          <div class="quick-stop-main">
+            <div class="quick-stop-info">
+              <h3 id="quick-stop-title">Penang Peranakan Mansion</h3>
+              <p id="quick-stop-time"><i class="fa-regular fa-clock"></i> 11:30 AM • 450m away</p>
+            </div>
+            <button class="quick-stop-nav-btn" onclick="openGoogleNavigation()">
+              <i class="fa-solid fa-diamond-turn-right"></i> Navigate
+            </button>
+          </div>
+        </div>
+
+        <!-- Itinerary Bottom Sheet / Drawer -->
+        <div id="itinerary-drawer" class="itinerary-drawer collapsed">
+          <div class="drawer-handle-zone" onclick="toggleItineraryDrawer()">
+            <div class="drawer-pill-bar"></div>
+            <div class="drawer-header-content">
+              <div class="drawer-header-left">
+                <i class="fa-solid fa-timeline"></i>
+                <span class="drawer-title">Daily Itinerary Timeline</span>
+                <span class="drawer-badge" id="stops-count-badge">4 Stops</span>
+              </div>
+              <div class="drawer-header-right">
+                <span class="toggle-text" id="drawer-toggle-text">Expand</span>
+                <i class="fa-solid fa-chevron-up drawer-chevron" id="drawer-chevron"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Drawer Body: Timeline list -->
+          <div class="drawer-body" id="itinerary-stops-list">
+            <!-- Rendered dynamically via JavaScript -->
+          </div>
+        </div>
+      </main>
+
+      <!-- SCREEN 3: Action & SOS Panel -->
+      <main id="screen-action" class="content-screen">
+        <div class="panel-container">
+          <div class="panel-header">
+            <h2 class="panel-title">Action & SOS Hub</h2>
+            <p class="panel-desc">Fast 1-tap broadcasts with your team without typing or calling.</p>
+          </div>
+
+          <!-- Lead Traveler Command Broadcast Banner -->
+          <div class="command-section">
+            <div class="section-label">
+              <i class="fa-solid fa-bullhorn"></i> Lead Traveler's Broadcast Order
+            </div>
+            <div class="command-card" id="leader-command-box">
+              <div class="command-pulse"></div>
+              <div class="command-content">
+                <div class="command-meta">
+                  <span class="leader-name"><i class="fa-solid fa-crown"></i> Leader (Vivian)</span>
+                  <span class="command-time" id="leader-command-time">Just now</span>
+                </div>
+                <div class="command-text" id="leader-command-text">
+                  "Regroup at the main entrance in 10 minutes. Photo session starting!"
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1-Tap Quick Status & SOS Triggers -->
+          <div class="sos-section">
+            <div class="section-label">
+              <i class="fa-solid fa-tower-broadcast"></i> Quick Status & Safety Triggers
+            </div>
+            <p class="sos-help-text">Tap any button to broadcast your immediate status and GPS coordinates to the whole team.</p>
+
+            <div class="sos-actions-grid">
+              <!-- I'm Lost / Left Behind Button -->
+              <button class="sos-btn sos-btn-danger" onclick="triggerBroadcast('LOST', 'I am lost / Left behind! Please wait for me.')">
+                <div class="sos-icon-box"><i class="fa-solid fa-person-circle-exclamation"></i></div>
+                <div class="sos-label-wrap">
+                  <span class="sos-primary-label">I'm Left Behind</span>
+                  <span class="sos-sub-label">Broadcast GPS & Alert Team</span>
+                </div>
+              </button>
+
+              <!-- Safe / Regrouped Button -->
+              <button class="sos-btn sos-btn-success" onclick="triggerBroadcast('SAFE', 'I am safe and catch up with group.')">
+                <div class="sos-icon-box"><i class="fa-solid fa-shield-heart"></i></div>
+                <div class="sos-label-wrap">
+                  <span class="sos-primary-label">I'm Safe</span>
+                  <span class="sos-sub-label">Clear Previous Alerts</span>
+                </div>
+              </button>
+
+              <!-- Request Assistance Button -->
+              <button class="sos-btn sos-btn-warning" onclick="triggerBroadcast('ASSIST', 'Need quick assistance or buying ticket.')">
+                <div class="sos-icon-box"><i class="fa-solid fa-handshake-angle"></i></div>
+                <div class="sos-label-wrap">
+                  <span class="sos-primary-label">Need Assistance</span>
+                  <span class="sos-sub-label">Request Team Support</span>
+                </div>
+              </button>
+
+              <!-- At Meeting Point / Arrived -->
+              <button class="sos-btn sos-btn-info" onclick="triggerBroadcast('ARRIVED', 'I have arrived at the assembly point.')">
+                <div class="sos-icon-box"><i class="fa-solid fa-flag-checkered"></i></div>
+                <div class="sos-label-wrap">
+                  <span class="sos-primary-label">At Meeting Point</span>
+                  <span class="sos-sub-label">Ready For Departure</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Broadcast History Log -->
+          <div class="history-section">
+            <div class="section-label">
+              <i class="fa-solid fa-clock-rotate-left"></i> Live Activity Feed
+            </div>
+            <div class="broadcast-feed" id="broadcast-feed-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- SCREEN 4: Settings & Privacy -->
+      <main id="screen-settings" class="content-screen">
+        <div class="panel-container">
+          <div class="panel-header">
+            <h2 class="panel-title">Settings & Privacy</h2>
+            <p class="panel-desc">Manage your GPS privacy, local offline assets, and trip session.</p>
+          </div>
+
+          <div class="settings-group">
+            <div class="settings-card">
+              <div class="setting-item">
+                <div class="setting-icon-col icon-indigo">
+                  <i class="fa-solid fa-location-crosshairs"></i>
+                </div>
+                <div class="setting-text-col">
+                  <span class="setting-title">Live GPS Location Sharing</span>
+                  <span class="setting-desc">Share your real-time position on the map with fellow travelers.</span>
+                </div>
+                <div class="setting-action-col">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="toggle-gps-sharing" checked onchange="toggleGpsSharing(this.checked)" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="setting-divider"></div>
+
+              <div class="setting-item">
+                <div class="setting-icon-col icon-amber">
+                  <i class="fa-solid fa-box-archive"></i>
+                </div>
+                <div class="setting-text-col">
+                  <span class="setting-title">Offline Cache Status</span>
+                  <span class="setting-desc" id="cache-status-desc">All 4 itinerary stops & map pins cached locally.</span>
+                </div>
+                <div class="setting-action-col">
+                  <span class="badge-cached"><i class="fa-solid fa-check"></i> Ready</span>
+                </div>
+              </div>
+
+              <div class="setting-divider"></div>
+
+              <div class="setting-item">
+                <div class="setting-icon-col icon-purple">
+                  <i class="fa-solid fa-id-badge"></i>
+                </div>
+                <div class="setting-text-col">
+                  <span class="setting-title">Companion Profile</span>
+                  <span class="setting-desc" id="settings-nickname-display">Displaying as: Alex</span>
+                </div>
+                <div class="setting-action-col">
+                  <button class="btn-text-edit" onclick="editNickname()">Edit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trip Connection Info -->
+          <div class="settings-group">
+            <div class="section-label">Active Connection</div>
+            <div class="trip-info-card">
+              <div class="trip-row">
+                <span class="row-label">Trip Code:</span>
+                <span class="row-value mono" id="info-trip-code">888888</span>
+              </div>
+              <div class="trip-row">
+                <span class="row-label">Organizer:</span>
+                <span class="row-value">Vivian (Lead Traveler)</span>
+              </div>
+              <div class="trip-row">
+                <span class="row-label">Joined At:</span>
+                <span class="row-value" id="info-join-time">Today, 11:00 AM</span>
+              </div>
+              <div class="trip-row">
+                <span class="row-label">Connection Mode:</span>
+                <span class="row-value text-success"><i class="fa-solid fa-bolt"></i> Live Sync Active</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Exit Trip Button -->
+          <div class="exit-section">
+            <button class="app-btn btn-exit" onclick="confirmExitTrip()">
+              <i class="fa-solid fa-right-from-bracket"></i> Leave Trip Session
+            </button>
+            <p class="exit-disclaimer">Disconnecting clears the local session and stops GPS sync.</p>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Global Tab Navigation -->
+      <nav class="bottom-nav">
+        <button class="nav-tab active" id="tab-dashboard" onclick="switchTab('dashboard')">
+          <i class="fa-solid fa-map-location-dot nav-icon"></i>
+          <span class="nav-label">Dashboard</span>
+        </button>
+        <button class="nav-tab" id="tab-action" onclick="switchTab('action')">
+          <div class="nav-icon-badge-wrap">
+            <i class="fa-solid fa-triangle-exclamation nav-icon"></i>
+            <span class="unread-dot hidden" id="action-unread-dot"></span>
+          </div>
+          <span class="nav-label">Action & SOS</span>
+        </button>
+        <button class="nav-tab" id="tab-settings" onclick="switchTab('settings')">
+          <i class="fa-solid fa-sliders nav-icon"></i>
+          <span class="nav-label">Settings</span>
+        </button>
+      </nav>
+
+    </div><!-- /app-shell -->
+  </div><!-- /app-container -->
+
+  <!-- Mapbox GL JS Library (Identical to Flutter App Mapbox SDK) -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+  <!-- Main Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

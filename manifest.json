@@ -1,0 +1,21 @@
+{
+  "name": "Kia Kia Penang - Travel Companion",
+  "short_name": "Companion",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#304FFE",
+  "description": "Real-time travel companion web app for Kia Kia Penang trips.",
+  "icons": [
+    {
+      "src": "icons/Icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/Icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
