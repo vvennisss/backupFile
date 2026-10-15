@@ -1,0 +1,63 @@
+{
+  "id": "plan_1792053406948",
+  "title": "Gurney Trip",
+  "stops": [
+    {
+      "stopNumber": 1,
+      "placeName": "Gurney Drive Hawker Center",
+      "area": "Pulau Tikus",
+      "category": "Food",
+      "timeSlot": "05:00 PM – 06:55 PM",
+      "stayDuration": "115 min (1h55m)",
+      "pennyTip": "Wah, so many food! Must try the Char Kway Teow, confirm plus chop very shiok!",
+      "adjustmentReason": "Note: Venue closes at 12:00 AM.",
+      "isAdjusted": true,
+      "imageUrl": "http://10.3.243.81:3000/images/places/ChIJA8mqOQbDSjAR-EXxQ-Vvf44.jpg",
+      "address": "172, Solok Gurney 1, Pulau Tikus, 10250 Jelutong, Penang, Malaysia",
+      "lat": 5.4402265,
+      "lng": 100.3087316,
+      "stayMinutes": 115
+    },
+    {
+      "stopNumber": 2,
+      "placeName": "Gurney Bay Waterfront Promenade",
+      "area": "George Town",
+      "category": "Nature",
+      "timeSlot": "07:10 PM – 08:59 PM",
+      "stayDuration": "109 min (1h49m)",
+      "pennyTip": "Perfect for walking-walking lah! Go during evening for the breeze, truly a steady place, right?",
+      "adjustmentReason": "Note: Venue closes at 06:00 PM.",
+      "isAdjusted": true,
+      "imageUrl": "https://lh3.googleusercontent.com/grass-cs/AABkmLcfKb4H-qeQ-HMuczC6v5PJAOgiJVNkI95LaIaVHqyBvv8SxVd9sVzD-NvIEU-h5D86OsCwHQj-CuX0_RIv-CPluOrAyaE1trxCZ4JCIfw3Ih7WtMM-fBU6jXDKVaODvIJeVcWKsgXwrKsH=w1000-h1000-c-n",
+      "address": "Gurney Drive, 10250 George Town, Penang, Malaysia",
+      "lat": 5.4365,
+      "lng": 100.312,
+      "stayMinutes": 109
+    },
+    {
+      "stopNumber": 3,
+      "placeName": "Tree Bar",
+      "area": "George Town",
+      "category": "Food & Dining",
+      "timeSlot": "09:14 PM – 11:09 PM",
+      "stayDuration": "115 min (1h55m)",
+      "pennyTip": "Chill vibes only here lah! Jom grab a drink and enjoy the cozy greenery, so relax!",
+      "adjustmentReason": "Note: Venue closes at 01:00 AM.",
+      "isAdjusted": true,
+      "imageUrl": "http://10.3.243.81:3000/images/places/ChIJIqR0zsTFAXYaX7KroGSPcWq.jpg",
+      "address": "Tree Bar, Gurney Plaza Underground Car Park Entrance, George Town, Pulau Pinang",
+      "lat": 5.437332,
+      "lng": 100.3100843,
+      "stayMinutes": 115
+    }
+  ],
+  "travelDateRange": "2026-10-15 to 2026-10-15",
+  "travelSchedule": "05:00 PM – 10:45 PM",
+  "travelArea": "Pulau Tikus, George Town",
+  "currentStopIndex": 0,
+  "isArrived": false,
+  "startLat": 5.3122,
+  "startLng": 100.2068,
+  "originName": "Audi Guest House",
+  "virtualStartTime": "2026-10-15T17:00:00.000"
+}
