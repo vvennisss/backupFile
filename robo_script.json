@@ -1,0 +1,56 @@
+[
+  {
+    "eventType": "VIEW_CLICKED",
+    "timestamp": 30000,
+    "action": "click",
+    "elementDescriptors": [
+      {
+        "text": "Sign in"
+      },
+      {
+        "contentDescription": "Sign in"
+      }
+    ]
+  },
+  {
+    "eventType": "VIEW_TEXT_CHANGED",
+    "timestamp": 34000,
+    "replacementText": "testbot@kiapenang.com",
+    "action": "enter_text",
+    "elementDescriptors": [
+      {
+        "text": "Enter your email"
+      },
+      {
+        "contentDescription": "Enter your email"
+      }
+    ]
+  },
+  {
+    "eventType": "VIEW_TEXT_CHANGED",
+    "timestamp": 37000,
+    "replacementText": "test123456",
+    "action": "enter_text",
+    "elementDescriptors": [
+      {
+        "text": "Enter password"
+      },
+      {
+        "contentDescription": "Enter password"
+      }
+    ]
+  },
+  {
+    "eventType": "VIEW_CLICKED",
+    "timestamp": 40000,
+    "action": "click",
+    "elementDescriptors": [
+      {
+        "text": "Sign in"
+      },
+      {
+        "contentDescription": "Sign in"
+      }
+    ]
+  }
+]
